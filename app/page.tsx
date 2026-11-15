@@ -2747,25 +2747,23 @@ display: none;
 
         }
 
+.leadership-award-photo img {
+  display: block;
+  width: 100%;
+  height: 560px;
+  object-fit: contain;
+  object-position: center;
+  background: #171513;
+}
 
-
-        .leadership-award-photo > span {
-
-          display: block;
-
-          padding: 12px 5px;
-
-          color: #C9A44C;
-
-          font-size: 8px;
-
-          letter-spacing: 1.3px;
-
-          text-align: center;
-
-        }
-
-
+@media (max-width: 600px) {
+  .leadership-award-photo img {
+    height: auto;
+    max-height: 430px;
+    object-fit: contain;
+  }
+}
+      
 
         .leadership-kicker {
 
@@ -3233,54 +3231,54 @@ display: none;
 
         }
 
+/* FINAL MOBILE HERO FIX */
+@media (max-width: 767px) {
+  .hero-section {
+    min-height: 850px;
+    overflow: hidden;
+  }
 
+  .hero-section .hero-globe-container {
+    display: block !important;
+    position: absolute;
+    z-index: 1;
+    pointer-events: none;
 
-        /* Mobile globe visibility override */
+    right: -65px;
+    bottom: -55px;
 
-        @media (max-width: 767px) {
+    width: 220px;
+    height: 220px;
 
-          .hero-section .hero-globe-container {
+    opacity: 0.16;
+  }
 
-            display: block !important;
+  .hero-section .globe-aura {
+    inset: 5%;
+    opacity: 0.5;
+  }
 
-            position: absolute;
+  .hero-section > div.relative.z-20 {
+    position: relative;
+    z-index: 20;
+  }
+}
 
-            z-index: 1;
+@media (max-width: 390px) {
+  .hero-section {
+    min-height: 830px;
+    padding-left: 22px;
+    padding-right: 22px;
+  }
 
-            pointer-events: none;
-
-            right: -25px;
-
-            bottom: 35px;
-
-            width: 290px;
-
-            height: 290px;
-
-            opacity: 0.30;
-
-          }
-
-        }
-
-
-
-        @media (max-width: 390px) {
-
-          .hero-section .hero-globe-container {
-
-            right: -20px;
-
-            bottom: 40px;
-
-            width: 260px;
-
-            height: 260px;
-
-          }
-
-        }
-
+  .hero-section .hero-globe-container {
+    right: -75px;
+    bottom: -60px;
+    width: 195px;
+    height: 195px;
+    opacity: 0.14;
+  }
+} 
       `}
 
 
