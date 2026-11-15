@@ -615,7 +615,7 @@ export default function Home() {
               <div className="leadership-award-photo">
 
                 <img
-  src="/images/your-image.jpg"
+  src="/images/vikas-award.jpeg"
   alt="Recognition & Achievement"
   className="h-auto w-full object-contain"
 />
@@ -2461,28 +2461,17 @@ margin-top: 24px;
 
 }
 
-
-
-/* Globe positioning */
+/* Cleaner mobile globe positioning */
 
 .hero-section .hero-globe-container {
-
-position: absolute;
-
-z-index: 1;
-
-pointer-events: none;
-
-right: -25px;
-
-bottom: 35px;
-
-width: 290px;
-
-height: 290px;
-
-opacity: 0.30;
-
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  right: -45px;
+  bottom: -25px;
+  width: 230px;
+  height: 230px;
+  opacity: 0.20;
 }
 
 
@@ -2552,17 +2541,12 @@ line-height: 1.8;
 
 
 .hero-section .hero-globe-container {
-
-right: -20px;
-
-bottom: 40px;
-
-width: 260px;
-
-height: 260px;
-
+  right: -40px;
+  bottom: -20px;
+  width: 210px;
+  height: 210px;
+  opacity: 0.18;
 }
-
 }
 
 
