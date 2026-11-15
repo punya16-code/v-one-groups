@@ -747,13 +747,14 @@ const videoReelRef = useRef<HTMLDivElement>(null);
 
           </p>
 
+<Link
+  href="/bytes"
+  className="relative z-20 inline-flex items-center gap-2 text-sm font-semibold text-white transition-colors duration-300 hover:text-cyan-300"
+>
+  EXPLORE V-ONE BYTES <span>↗</span>
+</Link>
 
-
-          <Link href="/bytes" className="text-[12px] font-semibold tracking-wider text-[#D9A36B] transition hover:text-white">
-
-            EXPLORE V-ONE BYTES ↗
-
-          </Link>
+      
 
         </div>
          

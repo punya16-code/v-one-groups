@@ -615,12 +615,10 @@ export default function Home() {
               <div className="leadership-award-photo">
 
                 <img
-
-                  src="/images/vikas-award.jpeg"
-
-                  alt="Vikas Bhaskar receiving an award"
-
-                />
+  src="/images/your-image.jpg"
+  alt="Recognition & Achievement"
+  className="h-auto w-full object-contain"
+/>
 
                 <span>RECOGNITION & ACHIEVEMENT</span>
 
