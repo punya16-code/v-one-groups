@@ -451,7 +451,8 @@ const videoReelRef = useRef<HTMLDivElement>(null);
         className="client-logo-image"
         src={client.logo}
         alt={index < previousClients.length ? client.name : ""}
-        loading="lazy"
+        loading={index < previousClients.length ? "eager" : "lazy"}
+        decoding="async"
         draggable={false}
       />
     </div>
@@ -1786,6 +1787,7 @@ const videoReelRef = useRef<HTMLDivElement>(null);
           }
         }
           
+
 /* ==========================================
    V-ONE CREATIONS — CLIENT LOGO REEL
 ========================================== */
@@ -1857,13 +1859,17 @@ const videoReelRef = useRef<HTMLDivElement>(null);
   line-height: 1.9;
 }
 
-/* REEL TRACK */
+/* LOGO REEL WRAPPER */
 
 .client-reel-wrapper {
   position: relative;
   width: 100%;
   overflow: hidden;
   padding: 20px 0 30px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+
   mask-image: linear-gradient(
     90deg,
     transparent,
@@ -1871,6 +1877,7 @@ const videoReelRef = useRef<HTMLDivElement>(null);
     black 92%,
     transparent
   );
+
   -webkit-mask-image: linear-gradient(
     90deg,
     transparent,
@@ -1879,6 +1886,8 @@ const videoReelRef = useRef<HTMLDivElement>(null);
     transparent
   );
 }
+
+/* ANIMATED TRACK */
 
 .client-reel-track {
   display: flex;
@@ -1908,75 +1917,48 @@ const videoReelRef = useRef<HTMLDivElement>(null);
 .client-logo-card {
   position: relative;
   display: flex;
+  flex: 0 0 255px;
   width: 255px;
-  height: 195px;
-  flex-shrink: 0;
-  flex-direction: column;
+  min-width: 0;
+  height: 180px;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding: 16px 20px;
+  padding: 16px 12px;
   overflow: hidden;
-  border: 1px solid rgba(217,163,107,.22);
-  border-radius: 5px;
-  background: linear-gradient(145deg, #FDFCF9, #F1ECE4);
-  box-shadow: 0 15px 35px rgba(0,0,0,.28);
-  transition:
-    transform 450ms ease,
-    border-color 450ms ease,
-    box-shadow 450ms ease;
-}
-
-.client-logo-card:hover {
-  transform: translateY(-9px);
-  border-color: #D9A36B;
-  box-shadow:
-    0 20px 45px rgba(0,0,0,.35),
-    0 0 28px rgba(217,163,107,.18);
-}
-
-/* IMAGE */
-
-.client-logo-image {
-  display: flex;
-  width: 100%;
-  height: 120px;
-  align-items: center;
-  justify-content: center;
-}
-
-.client-logo-image img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
+  background: transparent;
+  border: none;
+  box-shadow: none;
   transition: transform 450ms ease;
 }
 
-.client-logo-card:hover .client-logo-image img {
+.client-logo-card:hover {
+  transform: translateY(-6px);
+}
+
+/* LOGO IMAGES */
+
+.client-logo-image {
+  display: block;
+  width: 100%;
+  height: 140px;
+  object-fit: contain;
+  object-position: center;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  filter: none;
+  transition: transform 450ms ease;
+}
+
+.client-logo-card:hover .client-logo-image {
   transform: scale(1.045);
 }
 
-/* BRAND NAME */
+/* HIDE UNUSED BRAND LABELS */
 
-.client-logo-divider {
-  width: 38px;
-  height: 1px;
-  flex-shrink: 0;
-  background: #C28A58;
-  opacity: .7;
-}
-
+.client-logo-divider,
 .client-logo-name {
-  width: 100%;
-  margin: 0;
-  color: #30221B;
-  font-size: 12px;
-  font-weight: 800;
-  line-height: 1.4;
-  letter-spacing: .045em;
-  text-align: center;
+  display: none !important;
 }
 
 /* BOTTOM CAPTION */
@@ -2008,13 +1990,18 @@ const videoReelRef = useRef<HTMLDivElement>(null);
 /* TABLET */
 
 @media (max-width: 900px) {
+  .client-reel-section {
+    padding: 100px 0 80px;
+  }
+
   .client-logo-card {
+    flex-basis: 225px;
     width: 225px;
-    height: 180px;
+    height: 170px;
   }
 
   .client-logo-image {
-    height: 105px;
+    height: 125px;
   }
 
   .client-reel-track {
@@ -2031,6 +2018,7 @@ const videoReelRef = useRef<HTMLDivElement>(null);
 
   .client-reel-heading {
     margin-bottom: 42px;
+    padding: 0 20px;
   }
 
   .client-reel-heading h2 {
@@ -2047,18 +2035,14 @@ const videoReelRef = useRef<HTMLDivElement>(null);
   }
 
   .client-logo-card {
+    flex-basis: 190px;
     width: 190px;
-    height: 160px;
-    gap: 9px;
+    height: 150px;
     padding: 12px;
   }
 
   .client-logo-image {
-    height: 95px;
-  }
-
-  .client-logo-name {
-    font-size: 10px;
+    height: 115px;
   }
 
   .client-reel-bottom {
@@ -2084,10 +2068,11 @@ const videoReelRef = useRef<HTMLDivElement>(null);
   }
 
   .client-logo-card,
-  .client-logo-image img {
+  .client-logo-image {
     transition: none;
   }
 }
+
 /* CLEAN CLIENT LOGO REEL */
 
 .client-reel-section {

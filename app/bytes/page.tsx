@@ -1,1452 +1,1025 @@
 
 "use client";
 
-import Link from "next/link";
-import { useRef, useState } from "react";
+import { useState } from "react";
+
+const WHATSAPP_LINK =
+  "https://wa.me/919980102146?text=Hi%20V-ONE%20Bytes%2C%20I%27m%20interested%20in%20discussing%20a%20digital%20project.%20Could%20we%20connect%3F";
 
 const services = [
   {
     number: "01",
-    title: "Website Development",
-    subtitle: "Digital experiences built to perform.",
+    title: "Web Development",
+    subtitle: "Digital experiences that perform.",
     description:
-      "We build modern, responsive websites that communicate your brand, engage visitors and turn ideas into meaningful digital experiences.",
-    tags: ["Business websites", "Portfolio websites", "Landing pages", "Corporate websites"],
-    symbol: "⌘",
+      "We design and develop business websites, online stores, landing pages and web portals. Every website is mobile-friendly, fast-loading and easy to manage.",
+    items: ["Business websites", "Online stores", "Landing pages", "Web portals"],
+    symbol: "</>",
   },
   {
     number: "02",
-    title: "Mobile App Development",
-    subtitle: "Your ideas. In everyone's hands.",
+    title: "App Development",
+    subtitle: "Your business in every pocket.",
     description:
-      "From concept to launch, we create intuitive mobile applications designed for seamless experiences across Android and iOS.",
-    tags: ["Android apps", "iOS apps", "Cross-platform apps", "App deployment"],
+      "We build Android and iOS applications that are intuitive, reliable and ready to grow, from booking and delivery apps to custom tools for your team.",
+    items: ["Android applications", "iOS applications", "Booking & delivery apps", "Admin dashboards"],
     symbol: "▣",
   },
   {
     number: "03",
-    title: "Web Applications",
-    subtitle: "Powerful systems for modern businesses.",
+    title: "SEO Services",
+    subtitle: "Get found. Get chosen.",
     description:
-      "We develop functional web applications that simplify workflows, connect users and help businesses operate more efficiently.",
-    tags: ["Custom platforms", "Dashboards", "Admin panels", "Business portals"],
-    symbol: "⌘",
+      "We improve your visibility on search engines through keyword research, website optimisation and technical SEO to help your business attract relevant enquiries.",
+    items: ["Keyword research", "On-page SEO", "Technical SEO", "Local SEO"],
+    symbol: "⌕",
   },
   {
     number: "04",
-    title: "UI/UX Design",
-    subtitle: "Designed around people.",
+    title: "Website Management",
+    subtitle: "We look after your digital presence.",
     description:
-      "We transform complex ideas into clear, intuitive interfaces through thoughtful research, visual design and user-focused experiences.",
-    tags: ["User research", "Wireframes", "Prototyping", "Interface design"],
-    symbol: "◉",
+      "We handle updates, backups, security checks, speed improvements and content changes to keep your website secure, fresh and online.",
+    items: ["Content updates", "Regular backups", "Security monitoring", "Speed optimisation"],
+    symbol: "⌘",
   },
   {
     number: "05",
-    title: "Custom Software",
-    subtitle: "Technology shaped around your needs.",
+    title: "Technical Support",
+    subtitle: "Reliable support beyond launch.",
     description:
-      "We create tailored software solutions that address specific business requirements, improve processes and support long-term growth.",
-    tags: ["Custom systems", "Automation", "Business tools", "Integrations"],
-    symbol: "⌬",
+      "We help maintain your digital systems, troubleshoot issues and provide ongoing technical assistance as your business grows.",
+    items: ["Troubleshooting", "Website maintenance", "Technical assistance", "Ongoing support"],
+    symbol: "⌁",
+  },
+];
+
+const projects = [
+  {
+    number: "01",
+    name: "MACIPOLISYS",
+    type: "MOBILE APPLICATION",
+    description: "Explore the MACIPOLISYS mobile application.",
+    href: "https://play.google.com/store/apps/details?id=com.macipolisys.app",
+    action: "VIEW ON GOOGLE PLAY",
+    icon: "M",
   },
   {
-    number: "06",
-    title: "E-commerce Solutions",
-    subtitle: "Turn digital visits into business.",
-    description:
-      "We build online stores that make product discovery, shopping and order management simple for both customers and businesses.",
-    tags: ["Online stores", "Product catalogues", "Payment integration", "Order management"],
-    symbol: "◇",
+    number: "02",
+    name: "Macis infiX",
+    type: "WEBSITE",
+    description: "Explore the Macis infiX website.",
+    href: "https://macisinfix.com/",
+    action: "VISIT WEBSITE",
+    icon: "Mi",
   },
   {
-    number: "07",
-    title: "Technology Consulting",
-    subtitle: "Make your next move a smarter one.",
-    description:
-      "We help businesses identify opportunities, choose suitable technologies and plan practical digital solutions for their goals.",
-    tags: ["Digital strategy", "Technology planning", "System improvement", "Technical guidance"],
-    symbol: "↗",
+    number: "03",
+    name: "Macis Infotech",
+    type: "WEBSITE",
+    description: "Explore the Macis Infotech website.",
+    href: "https://macisinfotech.com/",
+    action: "VISIT WEBSITE",
+    icon: "IT",
+  },
+  {
+    number: "04",
+    name: "Macis Pharma",
+    type: "WEBSITE",
+    description: "Explore the Macis Pharma website.",
+    href: "https://macisipharma.com/",
+    action: "VISIT WEBSITE",
+    icon: "MP",
   },
 ];
 
 const process = [
   {
     number: "01",
-    title: "Discover",
+    title: "Understand",
     description:
-      "We understand your business, audience, challenges and the outcome you want to achieve.",
+      "We start by understanding your business, goals, audience and requirements.",
   },
   {
     number: "02",
-    title: "Design",
+    title: "Plan & Design",
     description:
-      "We plan the architecture and create an experience that balances usability and functionality.",
+      "We define the right solution, structure and experience for your project.",
   },
   {
     number: "03",
     title: "Develop",
     description:
-      "We turn the approved concept into a working digital product through structured development.",
+      "Our team brings the design to life through development and testing.",
   },
   {
     number: "04",
-    title: "Deploy",
+    title: "Launch & Support",
     description:
-      "We test, launch and prepare your solution for real-world use.",
+      "We launch your product and help you maintain and grow it.",
   },
 ];
 
-export default function BytesPage() {
+function TechnologyVisual() {
   return (
-    <main className="bytes-page min-h-screen overflow-hidden text-[#F3F6FC]">
-      <div className="bytes-ambient-background" aria-hidden="true">
-        <span className="bytes-ambient-light bytes-light-one" />
-        <span className="bytes-ambient-light bytes-light-two" />
-        <span className="bytes-ambient-light bytes-light-three" />
-        <span className="bytes-ambient-grain" />
+    <div className="tech-visual relative mx-auto h-[520px] w-full max-w-[600px]">
+      {/* Background glow */}
+      <div className="absolute inset-0 rounded-full bg-cyan-400/[0.05] blur-[90px]" />
+
+      {/* Main code editor */}
+      <div className="tech-window code-window absolute left-[5%] top-[9%] z-20 w-[65%] overflow-hidden rounded-lg">
+        <div className="flex h-9 items-center gap-2 border-b border-white/10 bg-[#111E32] px-4">
+          <span className="h-2 w-2 rounded-full bg-red-400/80" />
+          <span className="h-2 w-2 rounded-full bg-yellow-300/80" />
+          <span className="h-2 w-2 rounded-full bg-green-400/80" />
+          <span className="ml-3 text-[9px] tracking-wider text-white/50">
+            app.tsx
+          </span>
+        </div>
+
+        <div className="bg-[#091426] p-4 font-mono text-[10px] leading-[2] sm:p-5 sm:text-[11px]">
+          <div className="text-white/30">01</div>
+          <div>
+            <span className="text-purple-300">import</span>{" "}
+            <span className="text-cyan-200">React</span>{" "}
+            <span className="text-white/50">from</span>{" "}
+            <span className="text-green-300">&quot;react&quot;</span>
+          </div>
+          <div className="text-white/30">02</div>
+          <div>
+            <span className="text-purple-300">const</span>{" "}
+            <span className="text-cyan-200">Product</span>{" "}
+            <span className="text-white/60">=</span>{" "}
+            <span className="text-yellow-200">()</span>{" "}
+            <span className="text-white/60">=&gt;</span>{" "}
+            <span className="text-white/60">{"{"}</span>
+          </div>
+          <div className="pl-4">
+            <span className="text-purple-300">return</span>{" "}
+            <span className="text-white/60">(</span>
+          </div>
+          <div className="pl-8 text-green-300">
+            &lt;DigitalExperience /&gt;
+          </div>
+          <div className="pl-4 text-white/60">)</div>
+          <div className="text-white/60">{"}"}</div>
+          <div className="mt-3 flex items-center gap-2 text-cyan-300">
+            <span className="h-2 w-2 animate-pulse rounded-full bg-cyan-300" />
+            BUILD SUCCESSFUL
+          </div>
+        </div>
       </div>
 
-      <header className="bytes-header sticky top-0 z-50 border-b border-white/10">
-        <div className="mx-auto flex min-h-[82px] max-w-[1500px] items-center justify-between gap-4 px-5 md:px-12">
-          <Link href="/" className="flex shrink-0 items-center gap-3">
-            <span className="bytes-logo-mark">V</span>
-            <span className="text-[12px] font-semibold leading-5 tracking-[0.2em]">
-              V-ONE
-              <span className="block text-[#48B9FF]">BYTES</span>
+      {/* Mobile app preview */}
+      <div className="tech-window phone-window absolute right-[4%] top-[24%] z-30 w-[28%] rounded-[18px] p-2">
+        <div className="overflow-hidden rounded-[12px] bg-[#0B1A30]">
+          <div className="flex items-center justify-between px-3 py-3">
+            <span className="text-[8px] font-bold tracking-wider text-white">
+              APP UI
             </span>
-          </Link>
+            <span className="h-2 w-2 rounded-full bg-cyan-300" />
+          </div>
+          <div className="mx-2 rounded-md bg-gradient-to-br from-blue-500/40 to-cyan-300/10 p-3">
+            <div className="h-2 w-12 rounded bg-cyan-200/70" />
+            <div className="mt-2 h-2 w-16 rounded bg-white/30" />
+            <div className="mt-5 flex h-12 items-center justify-center rounded bg-cyan-300/10">
+              <span className="text-xl text-cyan-200">▣</span>
+            </div>
+          </div>
+          <div className="space-y-2 p-3">
+            <div className="h-2 w-full rounded bg-white/15" />
+            <div className="h-2 w-4/5 rounded bg-white/10" />
+            <div className="mt-3 h-6 rounded bg-cyan-300/80" />
+          </div>
+        </div>
+      </div>
 
-          <nav className="hidden items-center gap-8 text-[13px] text-white/75 lg:flex">
-            <a href="#about" className="bytes-nav-link">About</a>
-            <a href="#services" className="bytes-nav-link">Services</a>
-            <a href="#process" className="bytes-nav-link">Our Process</a>
-            <a href="#contact" className="bytes-nav-link">Contact</a>
+      {/* API connection panel */}
+      <div className="tech-window api-window absolute bottom-[15%] left-[8%] z-30 w-[40%] rounded-lg p-4">
+        <div className="flex items-center justify-between">
+          <span className="text-[9px] font-bold tracking-[0.18em] text-cyan-200">
+            API CONNECTION
+          </span>
+          <span className="h-2 w-2 rounded-full bg-green-400 shadow-[0_0_10px_#4ade80]" />
+        </div>
+        <div className="mt-4 flex items-center gap-2">
+          <span className="rounded bg-cyan-300/10 px-2 py-1 font-mono text-[9px] text-cyan-200">
+            GET
+          </span>
+          <span className="font-mono text-[9px] text-white/55">
+            /api/v1/data
+          </span>
+        </div>
+        <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/10">
+          <div className="h-full w-[82%] rounded-full bg-gradient-to-r from-blue-500 to-cyan-300" />
+        </div>
+        <div className="mt-2 text-[8px] text-green-300">
+          200 · CONNECTION ACTIVE
+        </div>
+      </div>
+
+      {/* Database panel */}
+      <div className="tech-window database-window absolute bottom-[8%] right-[4%] z-20 w-[37%] rounded-lg p-4">
+        <div className="flex items-center gap-3">
+          <div className="flex h-9 w-9 items-center justify-center rounded-md border border-blue-300/20 bg-blue-400/10 text-lg text-blue-200">
+            ◉
+          </div>
+          <div>
+            <div className="text-[9px] font-bold tracking-wider text-white">
+              DATABASE
+            </div>
+            <div className="mt-1 text-[8px] text-green-300">
+              ● CONNECTED
+            </div>
+          </div>
+        </div>
+        <div className="mt-4 space-y-2">
+          <div className="h-1.5 w-full rounded bg-white/10" />
+          <div className="h-1.5 w-4/5 rounded bg-white/10" />
+          <div className="h-1.5 w-3/5 rounded bg-cyan-300/30" />
+        </div>
+      </div>
+
+      {/* Floating technology labels */}
+      <div className="tech-tag tech-tag-one absolute left-0 top-[3%] z-40">
+        FRONTEND
+      </div>
+      <div className="tech-tag tech-tag-two absolute right-0 top-[8%] z-40">
+        MOBILE
+      </div>
+      <div className="tech-tag tech-tag-three absolute bottom-[2%] left-[35%] z-40">
+        BACKEND / API
+      </div>
+
+      {/* Connecting lines */}
+      <svg
+        className="pointer-events-none absolute inset-0 z-10 h-full w-full"
+        viewBox="0 0 600 520"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path
+          d="M180 160 L330 160 L440 210"
+          stroke="#36D9F5"
+          strokeOpacity=".45"
+          strokeWidth="1"
+          strokeDasharray="5 6"
+        />
+        <path
+          d="M180 360 L300 360 L450 400"
+          stroke="#397BFF"
+          strokeOpacity=".5"
+          strokeWidth="1"
+          strokeDasharray="5 6"
+        />
+        <path
+          d="M440 210 L440 340"
+          stroke="#36D9F5"
+          strokeOpacity=".3"
+          strokeWidth="1"
+          strokeDasharray="4 6"
+        />
+        <circle cx="330" cy="160" r="4" fill="#36D9F5" />
+        <circle cx="300" cy="360" r="4" fill="#397BFF" />
+        <circle cx="440" cy="340" r="4" fill="#36D9F5" />
+      </svg>
+    </div>
+  );
+}
+
+export default function BytesPage() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const closeMenu = () => setMenuOpen(false);
+
+  return (
+    <main className="bytes-page min-h-screen overflow-hidden bg-[#050914] text-white">
+      <style jsx global>{`
+        html {
+          scroll-behavior: smooth;
+        }
+
+        body {
+          background: #050914;
+        }
+
+        .bytes-page {
+          --cyan: #36d9f5;
+          --blue: #397bff;
+          --muted: #91a2bb;
+          background:
+            radial-gradient(
+              ellipse at 75% 8%,
+              rgba(31, 91, 190, 0.13),
+              transparent 38%
+            ),
+            #050914;
+        }
+
+        .bytes-grid {
+          background-image:
+            linear-gradient(rgba(65, 151, 255, 0.075) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(65, 151, 255, 0.075) 1px, transparent 1px);
+          background-size: 48px 48px;
+          mask-image: linear-gradient(
+            to bottom,
+            black 0%,
+            black 55%,
+            transparent 100%
+          );
+        }
+
+        .bytes-header {
+          background: rgba(5, 9, 20, 0.88);
+          backdrop-filter: blur(18px);
+        }
+
+        .bytes-accent,
+        .bytes-kicker {
+          color: var(--cyan);
+        }
+
+        .bytes-kicker {
+          letter-spacing: 0.23em;
+        }
+
+        .tech-window {
+          border: 1px solid rgba(74, 194, 239, 0.3);
+          background: rgba(8, 20, 39, 0.94);
+          box-shadow:
+            0 12px 45px rgba(0, 0, 0, 0.35),
+            0 0 25px rgba(54, 217, 245, 0.06);
+          backdrop-filter: blur(12px);
+          animation: techFloat 6s ease-in-out infinite;
+        }
+
+        .phone-window {
+          animation-delay: -2s;
+        }
+
+        .api-window {
+          animation-delay: -3.5s;
+        }
+
+        .database-window {
+          animation-delay: -1s;
+        }
+
+        .tech-tag {
+          border: 1px solid rgba(54, 217, 245, 0.35);
+          background: rgba(6, 17, 38, 0.95);
+          padding: 8px 11px;
+          color: #9beafa;
+          font-family: monospace;
+          font-size: 8px;
+          letter-spacing: 0.14em;
+          box-shadow: 0 0 20px rgba(54, 217, 245, 0.08);
+        }
+
+        .tech-tag-two {
+          animation: techFloat 5s ease-in-out -1s infinite;
+        }
+
+        .tech-tag-three {
+          animation: techFloat 5s ease-in-out -2s infinite;
+        }
+
+        .tech-card {
+          border: 1px solid rgba(108, 162, 219, 0.15);
+          background: linear-gradient(
+            145deg,
+            rgba(14, 29, 54, 0.88),
+            rgba(7, 14, 29, 0.96)
+          );
+          transition:
+            transform 0.35s ease,
+            border-color 0.35s ease,
+            box-shadow 0.35s ease;
+        }
+
+        .tech-card:hover {
+          transform: translateY(-6px);
+          border-color: rgba(54, 217, 245, 0.5);
+          box-shadow: 0 18px 55px rgba(24, 132, 220, 0.1);
+        }
+
+        .tech-button {
+          background: linear-gradient(110deg, #36d9f5, #65a9ff);
+          color: #04101e;
+          transition: all 0.3s ease;
+        }
+
+        .tech-button:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 0 30px rgba(54, 217, 245, 0.25);
+        }
+
+        .tech-link {
+          transition: color 0.25s ease;
+        }
+
+        .tech-link:hover {
+          color: var(--cyan);
+        }
+
+        .project-card {
+          position: relative;
+          overflow: hidden;
+          border: 1px solid rgba(108, 162, 219, 0.17);
+          background: linear-gradient(
+            145deg,
+            rgba(13, 29, 53, 0.9),
+            rgba(6, 13, 27, 0.98)
+          );
+          transition: all 0.35s ease;
+        }
+
+        .project-card:hover {
+          transform: translateY(-5px);
+          border-color: rgba(54, 217, 245, 0.52);
+          box-shadow: 0 20px 50px rgba(26, 147, 221, 0.1);
+        }
+
+        @keyframes techFloat {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-9px);
+          }
+        }
+
+        @media (max-width: 767px) {
+          .tech-visual {
+            height: 390px !important;
+            margin-top: 15px;
+          }
+
+          .code-window {
+            left: 1%;
+            top: 10%;
+            width: 68%;
+          }
+
+          .phone-window {
+            right: 0;
+            top: 24%;
+            width: 29%;
+          }
+
+          .api-window {
+            bottom: 13%;
+            left: 2%;
+            width: 43%;
+          }
+
+          .database-window {
+            right: 1%;
+            bottom: 8%;
+            width: 39%;
+          }
+
+          .tech-tag {
+            font-size: 7px;
+            padding: 7px 8px;
+          }
+
+          .tech-tag-one {
+            top: 1%;
+          }
+
+          .tech-tag-two {
+            top: 5%;
+          }
+        }
+
+        @media (max-width: 380px) {
+          .tech-visual {
+            height: 340px !important;
+          }
+
+          .code-window {
+            width: 66%;
+          }
+
+          .phone-window {
+            width: 29%;
+          }
+
+          .api-window,
+          .database-window {
+            padding: 10px;
+          }
+
+          .tech-tag {
+            font-size: 6px;
+            padding: 6px;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          *,
+          *::before,
+          *::after {
+            scroll-behavior: auto !important;
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+          }
+        }
+      `}</style>
+
+      {/* BACKGROUND */}
+      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+        <div className="bytes-grid absolute inset-0" />
+        <div className="absolute -right-40 top-40 h-[450px] w-[450px] rounded-full bg-blue-500/[0.06] blur-[120px]" />
+        <div className="absolute -left-40 top-[65%] h-[400px] w-[400px] rounded-full bg-cyan-400/[0.05] blur-[120px]" />
+      </div>
+
+      {/* NAVIGATION */}
+      <header className="bytes-header sticky top-0 z-50 border-b border-white/[0.08]">
+        <div className="mx-auto flex h-[76px] max-w-[1440px] items-center justify-between px-5 sm:px-8 lg:px-14">
+          <a href="/" className="flex flex-col leading-none">
+            <span className="text-[11px] font-bold tracking-[0.3em]">
+              V-ONE
+            </span>
+            <span className="mt-2 text-[13px] font-bold tracking-[0.28em] text-cyan-300">
+              BYTES<span className="text-white">.</span>
+            </span>
+          </a>
+
+          <nav className="hidden items-center gap-9 md:flex">
+            <a href="#about" className="tech-link text-[12px] text-white/65">
+              About
+            </a>
+            <a href="#services" className="tech-link text-[12px] text-white/65">
+              Services
+            </a>
+            <a href="#projects" className="tech-link text-[12px] text-white/65">
+              Projects
+            </a>
+            <a href="#process" className="tech-link text-[12px] text-white/65">
+              Our Process
+            </a>
+            <a href="#contact" className="tech-link text-[12px] text-white/65">
+              Contact
+            </a>
           </nav>
 
-          <div className="flex items-center gap-2 sm:gap-3">
-            <Link href="/" className="bytes-home-link">
-              <span>⌂</span>
-              <span className="hidden sm:inline">V-ONE GROUPS</span>
-              <span className="sm:hidden">HOME</span>
-            </Link>
+          <div className="hidden items-center gap-5 md:flex">
             <a
-              href="https://wa.me/919980102146?text=Hello%20V-ONE%20Bytes%2C%20I%20would%20like%20to%20discuss%20a%20website%20or%20app%20project."
+              href="/"
+              className="tech-link text-[10px] font-semibold tracking-[0.12em] text-white/55"
+            >
+              V-ONE GROUPS ↗
+            </a>
+            <a
+              href={WHATSAPP_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="bytes-primary-button"
+              className="tech-button px-5 py-3 text-[9px] font-bold tracking-[0.15em]"
             >
-              TEXT US ON WHATSAPP ↗
+              CHAT ON WHATSAPP ↗
             </a>
           </div>
+
+          <button
+            type="button"
+            aria-label="Toggle navigation"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((open) => !open)}
+            className="flex h-10 w-10 flex-col items-center justify-center gap-[6px] border border-white/15 md:hidden"
+          >
+            <span
+              className={`h-px w-5 bg-white transition ${
+                menuOpen ? "translate-y-[3.5px] rotate-45" : ""
+              }`}
+            />
+            <span
+              className={`h-px w-5 bg-white transition ${
+                menuOpen ? "-translate-y-[3.5px] -rotate-45" : ""
+              }`}
+            />
+          </button>
         </div>
+
+        {menuOpen && (
+          <nav className="border-t border-white/10 bg-[#080F20] px-6 py-6 md:hidden">
+            <div className="flex flex-col gap-5">
+              {[
+                ["About", "#about"],
+                ["Services", "#services"],
+                ["Projects", "#projects"],
+                ["Our Process", "#process"],
+                ["Contact", "#contact"],
+              ].map(([label, href]) => (
+                <a
+                  key={href}
+                  href={href}
+                  onClick={closeMenu}
+                  className="text-sm text-white/75"
+                >
+                  {label}
+                </a>
+              ))}
+
+              <a
+                href={WHATSAPP_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={closeMenu}
+                className="text-xs tracking-widest text-cyan-300"
+              >
+                CHAT ON WHATSAPP ↗
+              </a>
+
+              <a
+                href="/"
+                onClick={closeMenu}
+                className="text-xs tracking-widest text-white/55"
+              >
+                V-ONE GROUPS ↗
+              </a>
+            </div>
+          </nav>
+        )}
       </header>
 
-      
-{/* HERO SECTION */}
-<section className="bytes-hero relative overflow-hidden">
-  <div className="bytes-hero-glow" />
-
-  <div className="relative z-10 mx-auto grid min-h-[90vh] max-w-[1400px] items-center gap-12 px-6 py-24 md:grid-cols-2 md:px-12 lg:gap-16">
-
-    {/* LEFT CONTENT */}
-    <div className="bytes-hero-content">
-      <div className="bytes-eyebrow">
-        <span className="bytes-eyebrow-line" />
-        V-ONE GROUPS · TECHNOLOGY DIVISION
-      </div>
-
-      <h1 className="bytes-hero-title">
-        We build
-        <span> digital experiences</span>
-        that move businesses forward.
-      </h1>
-
-      <p className="bytes-hero-description">
-        From powerful websites to intuitive mobile applications,
-        we transform ambitious ideas into scalable digital
-        solutions through thoughtful design and technology.
-      </p>
-
-      <div className="mt-9 flex flex-wrap gap-4">
-        <a
-          href="#contact"
-          className="bytes-primary-button"
-        >
-          START A PROJECT
-          <span>↗</span>
-        </a>
-
-        <a
-          href="#services"
-          className="bytes-secondary-button"
-        >
-          EXPLORE OUR SERVICES
-          <span>↓</span>
-        </a>
-      </div>
-
-      <div className="bytes-hero-stats">
-        <div>
-          <strong>01</strong>
-          <span>WEB DEVELOPMENT</span>
-        </div>
-
-        <div>
-          <strong>02</strong>
-          <span>APP DEVELOPMENT</span>
-        </div>
-
-        <div>
-          <strong>03</strong>
-          <span>UI / UX DESIGN</span>
-        </div>
-      </div>
-    </div>
-
-    {/* RIGHT VISUAL — WEBSITE + MOBILE APP */}
-    <div className="bytes-art relative mx-auto aspect-square w-full max-w-[560px]">
-
-      <div className="bytes-art-halo" />
-
-      {/* LAPTOP / WEBSITE */}
-      <div className="bytes-device laptop-device">
-        <div className="laptop-screen">
-
-          <div className="browser-bar">
-            <span />
-            <span />
-            <span />
-            <div>vonebytes.com</div>
-          </div>
-
-          <div className="website-preview">
-            <div className="preview-nav">
-              V-ONE <span>BYTES</span>
-            </div>
-
-            <div className="preview-content">
-              <span>BUILD YOUR DIGITAL FUTURE</span>
-
-              <h3>
-                Ideas into
-                <br />
-                technology.
-              </h3>
-
-              <div className="preview-button">
-                EXPLORE ↗
-              </div>
-            </div>
-
-            <div className="preview-side-panel">
-              <span />
-              <span />
-              <span />
-            </div>
-          </div>
-        </div>
-
-        <div className="laptop-base" />
-      </div>
-
-      {/* MOBILE APP */}
-      <div className="bytes-device phone-device">
-        <div className="phone-screen">
-
-          <div className="phone-camera" />
-
-          <div className="phone-app-header">
-            V-ONE
-          </div>
-
-          <div className="phone-app-card">
-            <span>YOUR DIGITAL SPACE</span>
-
-            <strong>
-              Everything
-              <br />
-              connected.
-            </strong>
-          </div>
-
-          <div className="phone-app-lines">
-            <span />
-            <span />
-            <span />
-          </div>
-
-          <div className="phone-app-icons">
-            <i>⌘</i>
-            <i>◇</i>
-            <i>◉</i>
-          </div>
-        </div>
-      </div>
-
-      {/* FLOATING TECH LABELS */}
-      <span className="tech-float tech-code">
-        {"</>"}
-      </span>
-
-      <span className="tech-float tech-design">
-        UI / UX
-      </span>
-
-      <span className="tech-float tech-app">
-        APP DEVELOPMENT
-      </span>
-
-    </div>
-  </div>
-
-  {/* BOTTOM SCROLL INDICATOR */}
-  <div className="bytes-scroll-indicator">
-    <span />
-    SCROLL TO EXPLORE
-  </div>
-</section>
-
-      <section id="about" className="bytes-about border-t border-white/10 px-6 py-32 md:px-12">
-        <div className="mx-auto grid max-w-[1500px] gap-12 md:grid-cols-[0.65fr_1.35fr] md:gap-16">
-          <div>
-            <p className="bytes-eyebrow">WHO WE ARE</p>
-            <p className="mt-6 text-[13px] tracking-[0.18em] text-white/45">
-              THE TECHNOLOGY DIVISION
-            </p>
-            <div className="mt-9 h-px w-20 bg-[#48B9FF]/60" />
-          </div>
-
-          <div>
-            <h2 className="max-w-[1000px] font-serif text-[clamp(40px,5vw,68px)] leading-[1.12]">
-              Technology should
-              <span className="block text-[#48B9FF]">
-                move business forward.
+      {/* HERO */}
+      <section className="relative z-10 min-h-[760px] overflow-hidden border-b border-white/[0.07] lg:min-h-[790px]">
+        <div className="relative mx-auto grid min-h-[760px] max-w-[1440px] items-center px-5 pb-10 pt-20 sm:px-8 lg:min-h-[790px] lg:grid-cols-2 lg:px-14 lg:py-20">
+          <div className="relative z-20 max-w-[690px]">
+            <div className="mb-8 flex items-center gap-4">
+              <span className="h-px w-10 bg-cyan-300" />
+              <span className="bytes-kicker text-[9px] font-semibold sm:text-[10px]">
+                V-ONE GROUPS / DIGITAL TECHNOLOGY
               </span>
-            </h2>
+            </div>
 
-            <p className="mt-9 max-w-[780px] text-[16px] leading-[2] text-[#AAB9CA] md:text-[18px]">
-              V-ONE Bytes is the technology division of V-ONE Groups.
-              We bring together development, design and digital thinking
-              to create solutions that help businesses build, connect
-              and grow. From websites to custom applications, we turn
-              technology into practical business value.
+            <h1 className="text-[clamp(3.5rem,8vw,7.3rem)] font-semibold leading-[0.94] tracking-[-0.065em]">
+              Build beyond.
+              <span className="mt-3 block bg-gradient-to-r from-cyan-300 via-blue-300 to-white bg-clip-text text-transparent">
+                Think digital.
+              </span>
+            </h1>
+
+            <p className="mt-9 max-w-[550px] text-[14px] leading-[2] text-[#A5B5CA] sm:text-[16px]">
+              We are the technology and IT arm of V-ONE Groups. We build
+              websites and apps, help customers find you on Google, and keep
+              everything running smoothly after launch.
             </p>
+
+            <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+              <a
+                href={WHATSAPP_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="tech-button inline-flex items-center justify-center gap-8 px-7 py-[17px] text-[10px] font-bold tracking-[0.15em]"
+              >
+                LET&apos;S TALK ON WHATSAPP <span className="text-base">↗</span>
+              </a>
+              <a
+                href="#services"
+                className="tech-link inline-flex items-center gap-3 px-2 py-4 text-[10px] font-semibold tracking-[0.15em] text-white/65"
+              >
+                EXPLORE SERVICES <span className="text-cyan-300">↓</span>
+              </a>
+            </div>
+
+            <div className="mt-14 flex flex-wrap gap-3">
+              {["WEBSITES", "APPS", "SEO", "WEBSITE CARE", "SUPPORT"].map(
+                (item) => (
+                  <span
+                    key={item}
+                    className="border border-cyan-300/15 bg-cyan-300/[0.04] px-3 py-2 text-[8px] tracking-[0.14em] text-cyan-100/65"
+                  >
+                    {item}
+                  </span>
+                )
+              )}
+            </div>
+          </div>
+
+          {/* TECHNOLOGY-BASED HERO VISUAL */}
+          <div className="relative z-10 mt-10 lg:mt-0">
+            <TechnologyVisual />
+          </div>
+        </div>
+
+        <div className="absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-transparent via-cyan-300/40 to-transparent" />
+      </section>
+
+      {/* ABOUT */}
+      <section
+        id="about"
+        className="relative z-10 border-b border-white/[0.07] py-24 sm:py-32"
+      >
+        <div className="mx-auto grid max-w-[1440px] gap-12 px-5 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24 lg:px-14">
+          <div>
+            <p className="bytes-kicker text-[10px] font-semibold">
+              01 / ABOUT V-ONE BYTES
+            </p>
+            <h2 className="mt-7 max-w-[440px] text-4xl font-medium leading-[1.12] tracking-[-0.05em] sm:text-5xl lg:text-6xl">
+              Technology that grows your{" "}
+              <span className="text-cyan-300">business.</span>
+            </h2>
+          </div>
+
+          <div className="max-w-[700px] lg:pt-8">
+            <p className="text-lg leading-[1.9] text-[#D6E2F1] sm:text-[21px]">
+              V-ONE Bytes is the technology and IT division of V-ONE Groups.
+              We create digital solutions that help businesses establish
+              their presence, connect with customers and work smarter.
+            </p>
+
+            <p className="mt-7 text-sm leading-[2] text-[#91A2BB] sm:text-[15px]">
+              From business websites and mobile applications to search
+              visibility and ongoing website care, we bring design,
+              development and technical support together under one roof.
+              We believe technology should be useful, accessible and built
+              around the people who use it.
+            </p>
+
+            <div className="mt-10 flex items-center gap-4">
+              <span className="h-px w-12 bg-cyan-300" />
+              <span className="text-[9px] font-semibold tracking-[0.17em] text-white/60">
+                ONE TEAM. CONNECTED TECHNOLOGY.
+              </span>
+            </div>
           </div>
         </div>
       </section>
 
-      <section id="services" className="bytes-services px-6 py-32 md:px-12">
-        <div className="mx-auto max-w-[1500px]">
-          <div className="mb-20">
-            <p className="bytes-eyebrow">WHAT WE BUILD</p>
-            <div className="mt-6 flex flex-col justify-between gap-7 md:flex-row md:items-end">
-              <h2 className="font-serif text-[clamp(42px,5vw,70px)] leading-[1.08]">
-                Ideas into technology.
-              </h2>
-              <p className="max-w-[420px] text-[15px] leading-[1.9] text-white/55 md:text-[17px]">
-                From a first digital presence to a complete software
-                ecosystem, we build with purpose.
+      {/* SERVICES */}
+      <section id="services" className="relative z-10 py-24 sm:py-32">
+        <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-14">
+          <div className="flex flex-col justify-between gap-8 border-b border-white/10 pb-12 md:flex-row md:items-end">
+            <div>
+              <p className="bytes-kicker text-[10px] font-semibold">
+                02 / OUR SERVICES
               </p>
+              <h2 className="mt-6 text-4xl font-medium tracking-[-0.05em] sm:text-5xl lg:text-6xl">
+                Everything digital.
+                <br />
+                <span className="text-cyan-300">One technology partner.</span>
+              </h2>
             </div>
+
+            <p className="max-w-[360px] text-sm leading-[1.9] text-[#91A2BB]">
+              From the first line of code to ongoing support, we help your
+              business move forward with technology.
+            </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-9 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {services.map((service) => (
-              <article key={service.number} className="bytes-service-card group">
+              <article
+                key={service.number}
+                className="tech-card group flex min-h-[340px] flex-col p-7 sm:p-8"
+              >
                 <div className="flex items-start justify-between">
-                  <span className="text-[11px] tracking-[0.2em] text-[#48B9FF]">
-                    CAPABILITY / {service.number}
+                  <span className="text-[10px] font-semibold tracking-[0.2em] text-cyan-300">
+                    SERVICE / {service.number}
                   </span>
-                  <span className="bytes-service-symbol">{service.symbol}</span>
+                  <span className="text-2xl text-cyan-300/70 transition group-hover:scale-110">
+                    {service.symbol}
+                  </span>
                 </div>
 
-                <div className="mt-14">
-                  <h3 className="font-serif text-[32px] leading-[1.15] md:text-[36px]">
-                    {service.title}
-                  </h3>
-                  <p className="mt-4 text-[13px] font-semibold leading-6 tracking-wide text-[#48B9FF] md:text-[14px]">
-                    {service.subtitle}
-                  </p>
-                  <p className="mt-6 text-[15px] leading-[1.9] text-[#AAB9CA] md:text-[16px]">
-                    {service.description}
-                  </p>
-                </div>
+                <h3 className="mt-10 text-[23px] font-medium tracking-[-0.03em]">
+                  {service.title}
+                </h3>
 
-                <div className="mt-10 border-t border-white/10 pt-7">
-                  <p className="mb-5 text-[10px] font-bold tracking-[0.2em] text-white/45">
-                    OUR CAPABILITIES
-                  </p>
-                  <div className="flex flex-wrap gap-2.5">
-                    {service.tags.map((tag) => (
-                      <span key={tag} className="bytes-tag">{tag}</span>
-                    ))}
-                  </div>
-                </div>
+                <p className="mt-2 text-[11px] font-semibold text-cyan-200/75">
+                  {service.subtitle}
+                </p>
 
-                <div className="bytes-card-accent" />
+                <p className="mt-4 text-[12px] leading-[1.9] text-[#91A2BB]">
+                  {service.description}
+                </p>
+
+                <div className="mt-auto flex flex-wrap gap-2 pt-7">
+                  {service.items.map((item) => (
+                    <span
+                      key={item}
+                      className="border border-white/10 px-3 py-2 text-[9px] text-white/55"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="process" className="bytes-process border-y border-white/10 px-6 py-32 md:px-12">
-        <div className="mx-auto max-w-[1500px]">
-          <p className="bytes-eyebrow">HOW WE WORK</p>
-          <h2 className="mt-7 max-w-[850px] font-serif text-[clamp(42px,5vw,70px)] leading-[1.12]">
+      {/* SELECTED PROJECTS */}
+      <section
+        id="projects"
+        className="relative z-10 overflow-hidden border-y border-white/[0.07] bg-[#081225] py-24 sm:py-32"
+      >
+        <div className="pointer-events-none absolute -left-40 top-0 h-[450px] w-[450px] rounded-full bg-blue-500/[0.08] blur-[120px]" />
+
+        <div className="relative mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-14">
+          <div className="flex flex-col justify-between gap-8 border-b border-white/10 pb-12 md:flex-row md:items-end">
+            <div>
+              <p className="bytes-kicker text-[10px] font-semibold">
+                03 / SELECTED PROJECTS
+              </p>
+              <h2 className="mt-6 text-4xl font-medium tracking-[-0.05em] sm:text-5xl lg:text-6xl">
+                Built for the
+                <br />
+                <span className="text-cyan-300">real world.</span>
+              </h2>
+            </div>
+
+            <p className="max-w-[350px] text-sm leading-[1.9] text-[#91A2BB]">
+              Explore selected digital projects and platforms.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-4 md:grid-cols-2">
+            {projects.map((project) => (
+              <article
+                key={project.number}
+                className="project-card flex min-h-[250px] flex-col p-7 sm:p-9"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[9px] font-semibold tracking-[0.2em] text-cyan-300">
+                    PROJECT / {project.number}
+                  </span>
+                  <span className="text-[9px] tracking-[0.15em] text-white/40">
+                    {project.type}
+                  </span>
+                </div>
+
+                <div className="mt-9 flex items-center gap-5">
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center border border-cyan-300/25 bg-cyan-300/[0.07] text-lg font-bold text-cyan-200">
+                    {project.icon}
+                  </div>
+
+                  <div>
+                    <h3 className="text-2xl font-medium tracking-[-0.04em]">
+                      {project.name}
+                    </h3>
+                    <p className="mt-2 text-xs text-[#91A2BB]">
+                      {project.description}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-auto flex items-center justify-between gap-4 border-t border-white/10 pt-6">
+                  <span className="text-[8px] tracking-[0.16em] text-white/35">
+                    V-ONE BYTES
+                  </span>
+
+                  <a
+                    href={project.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="tech-link inline-flex items-center gap-3 text-[9px] font-bold tracking-[0.13em] text-cyan-300"
+                  >
+                    {project.action} <span className="text-base">↗</span>
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PROCESS */}
+      <section id="process" className="relative z-10 py-24 sm:py-32">
+        <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-14">
+          <p className="bytes-kicker text-[10px] font-semibold">
+            04 / OUR PROCESS
+          </p>
+
+          <h2 className="mt-6 text-4xl font-medium tracking-[-0.05em] sm:text-5xl lg:text-6xl">
             From concept
-            <span className="block text-[#48B9FF]">to real-world impact.</span>
+            <br />
+            <span className="text-cyan-300">to creation.</span>
           </h2>
 
-          <div className="mt-20 grid gap-12 md:grid-cols-2 xl:grid-cols-4">
-            {process.map((item) => (
-              <div key={item.number} className="bytes-process-item">
-                <span className="font-serif text-[48px] text-[#48B9FF]/65">
-                  {item.number}
+          <p className="mt-6 max-w-[500px] text-sm leading-[1.9] text-[#91A2BB]">
+            Every successful digital product starts with a clear
+            understanding of the problem and a thoughtful plan to solve it.
+          </p>
+
+          <div className="mt-16 grid border-y border-white/10 md:grid-cols-4">
+            {process.map((step, index) => (
+              <div
+                key={step.number}
+                className={`py-9 md:px-7 md:py-10 ${
+                  index > 0
+                    ? "border-t border-white/10 md:border-l md:border-t-0"
+                    : ""
+                }`}
+              >
+                <span className="text-[11px] font-semibold tracking-[0.2em] text-cyan-300">
+                  {step.number}
                 </span>
-                <h3 className="mt-8 text-[21px] font-semibold">{item.title}</h3>
-                <p className="mt-5 text-[15px] leading-[1.9] text-[#AAB9CA]">
-                  {item.description}
+
+                <h3 className="mt-10 text-2xl font-medium">{step.title}</h3>
+
+                <p className="mt-4 max-w-[240px] text-[12px] leading-[1.9] text-[#91A2BB]">
+                  {step.description}
                 </p>
+
+                <div className="mt-10 h-px w-12 bg-gradient-to-r from-cyan-300 to-transparent" />
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="contact" className="bytes-contact relative overflow-hidden px-6 py-36 md:px-12">
-        <div className="bytes-contact-glow" />
+      {/* CONTACT */}
+      <section
+        id="contact"
+        className="relative z-10 overflow-hidden border-t border-white/[0.07] bg-[#081225] py-24 sm:py-32"
+      >
+        <div className="pointer-events-none absolute -right-40 top-0 h-[500px] w-[500px] rounded-full bg-cyan-400/[0.06] blur-[120px]" />
 
-        <div className="relative z-10 mx-auto max-w-[1150px] text-center">
-          <p className="bytes-eyebrow">HAVE A PROJECT IN MIND?</p>
-          <h2 className="mt-9 font-serif text-[clamp(48px,7vw,88px)] leading-[1.05]">
-            Let&apos;s build
-            <span className="block text-[#48B9FF]">what&apos;s next.</span>
-          </h2>
-
-          <p className="mx-auto mt-9 max-w-[650px] text-[16px] leading-[2] text-[#B8C7D9] md:text-[18px]">
-            Have an idea, a business challenge or a digital product
-            you want to bring to life? Let&apos;s start a conversation.
+        <div className="relative mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-14">
+          <p className="bytes-kicker text-[10px] font-semibold">
+            05 / LET&apos;S CONNECT
           </p>
 
-          <div className="mt-12 flex flex-wrap justify-center gap-5">
-            <Link href="/#contact" className="bytes-primary-button">
-              DISCUSS YOUR PROJECT ↗
-            </Link>
-            <Link href="/creations" className="bytes-secondary-button">
-              EXPLORE V-ONE CREATIONS
-            </Link>
+          <div className="mt-8 flex flex-col justify-between gap-12 lg:flex-row lg:items-end">
+            <div>
+              <h2 className="text-[clamp(3.2rem,7vw,6.8rem)] font-medium leading-[0.98] tracking-[-0.06em]">
+                Have an idea?
+                <br />
+                <span className="text-cyan-300">Let&apos;s build it.</span>
+              </h2>
+
+              <p className="mt-8 max-w-[490px] text-sm leading-[1.9] text-[#91A2BB]">
+                Tell us what you have in mind. Let&apos;s discuss how
+                technology can help your business move forward.
+              </p>
+            </div>
+
+            <div className="flex shrink-0 flex-col items-start gap-5">
+              <a
+                href={WHATSAPP_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="tech-button inline-flex items-center gap-10 px-8 py-5 text-[10px] font-bold tracking-[0.15em]"
+              >
+                START A CONVERSATION <span className="text-lg">↗</span>
+              </a>
+
+              <a
+                href="tel:+919980102146"
+                className="tech-link text-sm text-white/65"
+              >
+                +91 99801 02146
+              </a>
+
+              <a
+                href="mailto:vonegroups@gmail.com"
+                className="tech-link text-sm text-white/65"
+              >
+                vonegroups@gmail.com
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
-      <footer className="border-t border-white/10 px-6 py-10 md:px-12">
-        <div className="mx-auto flex max-w-[1500px] flex-col justify-between gap-8 md:flex-row md:items-center">
-          <Link href="/" className="text-[13px] font-bold leading-6 tracking-[0.2em]">
-            V-ONE GROUPS
-            <span className="block text-[12px] font-normal tracking-normal text-[#48B9FF]">
-              A creative and technology group
-            </span>
-          </Link>
+      {/* FOOTER */}
+      <footer className="relative z-10 border-t border-white/[0.07] bg-[#050914]">
+        <div className="mx-auto flex max-w-[1440px] flex-col gap-8 px-5 py-9 sm:px-8 md:flex-row md:items-center md:justify-between lg:px-14">
+          <div>
+            <p className="text-[11px] font-bold tracking-[0.28em]">
+              V-ONE <span className="text-cyan-300">BYTES.</span>
+            </p>
+            <p className="mt-2 text-[10px] text-white/40">
+              A technology division of V-ONE Groups
+            </p>
+          </div>
 
-          <p className="text-[12px] text-white/45">
-            V-ONE Bytes · A V-ONE Groups company
+          <div className="flex flex-wrap gap-x-6 gap-y-3 text-[9px] tracking-[0.12em] text-white/45">
+            <a href="#about" className="tech-link">ABOUT</a>
+            <a href="#services" className="tech-link">SERVICES</a>
+            <a href="#projects" className="tech-link">PROJECTS</a>
+            <a href="#process" className="tech-link">PROCESS</a>
+            <a href="#contact" className="tech-link">CONTACT</a>
+          </div>
+
+          <a
+            href="/"
+            className="tech-link text-[10px] font-semibold tracking-[0.12em] text-cyan-300"
+          >
+            V-ONE GROUPS ↗
+          </a>
+
+          <p className="text-[9px] text-white/30">
+           © 2026 V-ONE Groups. All rights reserved.
           </p>
-
-          <Link href="/creations" className="text-[12px] font-semibold tracking-wider text-[#48B9FF] transition hover:text-white">
-            EXPLORE V-ONE CREATIONS ↗
-          </Link>
         </div>
       </footer>
-
-      <style jsx global>{`
-        .bytes-page {
-          --blue: #267BFF;
-          --cyan: #48B9FF;
-          position: relative;
-          isolation: isolate;
-          background: linear-gradient(135deg, #081321, #061322 48%, #030B16);
-        }
-
-        .bytes-ambient-background {
-          position: fixed;
-          z-index: -1;
-          inset: 0;
-          overflow: hidden;
-          pointer-events: none;
-          background: radial-gradient(ellipse at 50% 50%, rgba(18,60,117,0.12), transparent 70%);
-        }
-
-        .bytes-ambient-light {
-          position: absolute;
-          display: block;
-          width: 45vw;
-          height: 45vw;
-          min-width: 280px;
-          min-height: 280px;
-          border-radius: 50%;
-          filter: blur(105px);
-          opacity: 0.17;
-          will-change: transform;
-        }
-
-        .bytes-light-one {
-          top: -15%;
-          left: -15%;
-          background: #267BFF;
-          animation: bytesAmbientOne 25s ease-in-out infinite alternate;
-        }
-
-        .bytes-light-two {
-          top: 35%;
-          right: -18%;
-          background: #24D5E8;
-          animation: bytesAmbientTwo 30s ease-in-out infinite alternate;
-        }
-
-        .bytes-light-three {
-          bottom: -25%;
-          left: 25%;
-          background: #123C75;
-          animation: bytesAmbientThree 27s ease-in-out infinite alternate;
-        }
-
-        .bytes-ambient-grain {
-          position: absolute;
-          inset: 0;
-          opacity: 0.1;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.15'/%3E%3C/svg%3E");
-        }
-
-        .bytes-header {
-          background: rgba(5,15,29,0.9);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
-        }
-
-        .bytes-logo-mark {
-          display: flex;
-          width: 44px;
-          height: 44px;
-          align-items: center;
-          justify-content: center;
-          border: 1px solid #48B9FF;
-          color: #48B9FF;
-          font-family: Georgia, serif;
-          font-size: 21px;
-        }
-
-        .bytes-home-link {
-          display: inline-flex;
-          min-height: 40px;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-          border: 1px solid rgba(72,185,255,0.65);
-          padding: 0 13px;
-          color: #48B9FF;
-          font-size: 9px;
-          font-weight: 800;
-          letter-spacing: 0.12em;
-          transition: background 300ms ease, color 300ms ease, transform 300ms ease;
-        }
-
-        .bytes-home-link:hover {
-          transform: translateY(-2px);
-          background: #48B9FF;
-          color: #061322;
-        }
-
-        .bytes-home-link span:first-child { font-size: 17px; }
-
-        .bytes-nav-link {
-          position: relative;
-          padding: 8px 0;
-          transition: color 300ms ease;
-        }
-
-        .bytes-nav-link:hover { color: #48B9FF; }
-
-        .bytes-nav-link::after {
-          position: absolute;
-          right: 0;
-          bottom: 0;
-          left: 0;
-          height: 1px;
-          background: #48B9FF;
-          content: "";
-          transform: scaleX(0);
-          transform-origin: right;
-          transition: transform 350ms ease;
-        }
-
-        .bytes-nav-link:hover::after {
-          transform: scaleX(1);
-          transform-origin: left;
-        }
-
-        .bytes-header-cta {
-          align-items: center;
-          border: 1px solid #48B9FF;
-          background: #48B9FF;
-          padding: 14px 18px;
-          color: #061322;
-          font-size: 9px;
-          font-weight: 800;
-          letter-spacing: 0.12em;
-          transition: all 300ms ease;
-        }
-
-        .bytes-header-cta:hover {
-          background: transparent;
-          color: #48B9FF;
-        }
-
-        .bytes-hero {
-          isolation: isolate;
-          min-height: min(820px, calc(100svh - 82px));
-        }
-
-        .bytes-hero-glow {
-          position: absolute;
-          inset: 0;
-          z-index: -1;
-          background:
-            radial-gradient(ellipse at 76% 48%, rgba(38,123,255,0.2), transparent 38%),
-            radial-gradient(ellipse at 10% 80%, rgba(36,213,232,0.08), transparent 42%);
-          animation: bytesGlow 16s ease-in-out infinite alternate;
-        }
-
-        .bytes-hero-grid {
-          position: absolute;
-          inset: 0;
-          z-index: -1;
-          opacity: 0.12;
-          background-image:
-            linear-gradient(rgba(72,185,255,0.15) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(72,185,255,0.15) 1px, transparent 1px);
-          background-size: 90px 90px;
-          mask-image: radial-gradient(ellipse at center, black, transparent 80%);
-        }
-
-        .bytes-eyebrow {
-          color: #48B9FF;
-          font-size: 11px;
-          font-weight: 800;
-          letter-spacing: 0.25em;
-        }
-
-        .bytes-enter {
-          animation: bytesEnter 1.1s cubic-bezier(0.2,0.7,0.2,1) both;
-        }
-
-        .bytes-primary-button, .bytes-secondary-button {
-          display: inline-flex;
-          min-height: 60px;
-          align-items: center;
-          justify-content: center;
-          padding: 18px 28px;
-          font-size: 11px;
-          font-weight: 800;
-          letter-spacing: 0.13em;
-          transition: all 350ms ease;
-        }
-
-        .bytes-primary-button {
-          background: #48B9FF;
-          color: #061322;
-        }
-
-        .bytes-primary-button:hover {
-          transform: translateY(-4px);
-          background: #8CEAFF;
-        }
-
-        .bytes-secondary-button {
-          border: 1px solid rgba(255,255,255,0.28);
-          color: #F3F6FC;
-        }
-
-        .bytes-secondary-button:hover {
-          transform: translateY(-4px);
-          border-color: #48B9FF;
-          color: #48B9FF;
-        }
-
-        .bytes-art {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          animation: bytesArtFloat 9s ease-in-out infinite;
-        }
-
-        .bytes-art-halo {
-          position: absolute;
-          inset: 18%;
-          border-radius: 50%;
-          background: rgba(38,123,255,0.13);
-          filter: blur(55px);
-          animation: bytesPulse 7s ease-in-out infinite alternate;
-        }
-
-        .bytes-ring {
-          position: absolute;
-          border: 1px solid rgba(72,185,255,0.25);
-          border-radius: 50%;
-        }
-
-        .bytes-ring-one { inset: 4%; animation: bytesRotate 38s linear infinite; }
-        .bytes-ring-two { inset: 15%; border-style: dashed; animation: bytesRotate 48s linear infinite reverse; }
-        .bytes-ring-three { inset: 27%; border-color: rgba(72,185,255,0.5); animation: bytesPulse 6s ease-in-out infinite alternate; }
-        .bytes-ring-four { inset: 38%; border-style: dotted; animation: bytesRotate 24s linear infinite; }
-
-        .bytes-art-center {
-          display: flex;
-          width: 43%;
-          height: 43%;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          border: 1px solid rgba(72,185,255,0.4);
-          border-radius: 50%;
-          background: radial-gradient(circle, #123C75, #061322 75%);
-          box-shadow: 0 0 70px rgba(38,123,255,0.2);
-          animation: bytesCenterGlow 5s ease-in-out infinite alternate;
-        }
-
-        .bytes-core-symbol {
-          color: #B5EFFF;
-          font-family: Georgia, serif;
-          font-size: clamp(65px, 8vw, 100px);
-          line-height: 1;
-          text-shadow: 0 0 35px rgba(72,185,255,0.5);
-        }
-
-        .bytes-floating {
-          position: absolute;
-          z-index: 2;
-          border: 1px solid rgba(72,185,255,0.4);
-          background: rgba(6,19,34,0.88);
-          padding: 13px 17px;
-          color: #8CEAFF;
-          font-size: 10px;
-          font-weight: 800;
-          letter-spacing: 0.2em;
-          backdrop-filter: blur(12px);
-        }
-
-        .bytes-floating-one { top: 12%; left: 9%; animation: bytesFloatOne 6s ease-in-out infinite; }
-        .bytes-floating-two { top: 24%; right: 1%; animation: bytesFloatTwo 7s ease-in-out infinite; }
-        .bytes-floating-three { bottom: 17%; left: 0; animation: bytesFloatTwo 8s ease-in-out infinite reverse; }
-        .bytes-floating-four { right: 12%; bottom: 9%; animation: bytesFloatOne 7s ease-in-out infinite reverse; }
-
-        .bytes-node {
-          position: absolute;
-          width: 9px;
-          height: 9px;
-          border-radius: 50%;
-          background: #48B9FF;
-          box-shadow: 0 0 20px #48B9FF;
-        }
-
-        .node-one { top: 15%; right: 28%; }
-        .node-two { bottom: 28%; right: 13%; }
-        .node-three { bottom: 12%; left: 30%; }
-
-        .bytes-about { background: rgba(0,0,0,0.08); }
-        .bytes-services { background: rgba(0,0,0,0.15); }
-        .bytes-process { background: rgba(0,0,0,0.06); }
-
-        .bytes-service-card {
-          position: relative;
-          display: flex;
-          min-height: 535px;
-          flex-direction: column;
-          overflow: hidden;
-          padding: 36px;
-          border: 1px solid rgba(72,185,255,0.16);
-          background: linear-gradient(145deg, rgba(18,60,117,0.35), rgba(5,15,29,0.78));
-          transition: transform 550ms ease, border-color 450ms ease, box-shadow 550ms ease;
-        }
-
-        .bytes-service-card::before {
-          position: absolute;
-          top: -120px;
-          right: -120px;
-          width: 240px;
-          height: 240px;
-          border-radius: 50%;
-          background: rgba(36,213,232,0.08);
-          content: "";
-          filter: blur(45px);
-          transition: transform 700ms ease;
-          pointer-events: none;
-        }
-
-        .bytes-service-card:hover {
-          transform: translateY(-9px);
-          border-color: rgba(72,185,255,0.65);
-          box-shadow: 0 25px 75px rgba(0,0,0,0.28);
-        }
-
-        .bytes-service-card:hover::before { transform: scale(1.8); }
-
-        .bytes-service-symbol {
-          display: flex;
-          width: 52px;
-          height: 52px;
-          align-items: center;
-          justify-content: center;
-          border: 1px solid rgba(72,185,255,0.4);
-          color: #48B9FF;
-          font-size: 25px;
-          transition: transform 500ms ease;
-        }
-
-        .bytes-service-card:hover .bytes-service-symbol { transform: rotate(45deg); }
-
-        .bytes-tag {
-          border: 1px solid rgba(255,255,255,0.13);
-          padding: 9px 12px;
-          color: rgba(255,255,255,0.72);
-          font-size: 11px;
-          transition: border-color 300ms ease, color 300ms ease;
-        }
-
-        .bytes-service-card:hover .bytes-tag {
-          border-color: rgba(72,185,255,0.4);
-          color: #8CEAFF;
-        }
-
-        .bytes-card-accent {
-          position: absolute;
-          right: 0;
-          bottom: 0;
-          left: 0;
-          height: 2px;
-          background: linear-gradient(90deg, transparent, #48B9FF, transparent);
-          transform: scaleX(0);
-          transition: transform 550ms ease;
-        }
-
-        .bytes-service-card:hover .bytes-card-accent { transform: scaleX(1); }
-
-        .bytes-process-item {
-          padding-top: 28px;
-          border-top: 1px solid rgba(72,185,255,0.32);
-          transition: transform 450ms ease;
-        }
-
-        .bytes-process-item:hover { transform: translateY(-7px); }
-
-        .bytes-contact {
-          background: radial-gradient(ellipse at center, rgba(38,123,255,0.16), transparent 65%);
-        }
-
-        .bytes-contact-glow {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          width: 500px;
-          height: 500px;
-          border-radius: 50%;
-          background: rgba(36,213,232,0.07);
-          filter: blur(100px);
-          transform: translate(-50%, -50%);
-          animation: bytesContactPulse 8s ease-in-out infinite alternate;
-        }
-
-        @keyframes bytesAmbientOne {
-          from { transform: translate(0,0) scale(1); }
-          to { transform: translate(18vw,15vh) scale(1.25); }
-        }
-
-        @keyframes bytesAmbientTwo {
-          from { transform: translate(0,0) scale(1); }
-          to { transform: translate(-16vw,12vh) scale(1.2); }
-        }
-
-        @keyframes bytesAmbientThree {
-          from { transform: translate(0,0) scale(1); }
-          to { transform: translate(12vw,-15vh) scale(1.3); }
-        }
-
-        @keyframes bytesGlow {
-          from { transform: scale(0.96); opacity: 0.7; }
-          to { transform: scale(1.08); opacity: 1; }
-        }
-
-        @keyframes bytesEnter {
-          from { opacity: 0; transform: translateY(35px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes bytesRotate { to { transform: rotate(360deg); } }
-
-        @keyframes bytesPulse {
-          from { transform: scale(0.95); opacity: 0.55; }
-          to { transform: scale(1.05); opacity: 1; }
-        }
-
-        @keyframes bytesArtFloat {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-13px); }
-        }
-
-        @keyframes bytesFloatOne {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-13px); }
-        }
-
-        @keyframes bytesFloatTwo {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(12px); }
-        }
-
-        @keyframes bytesCenterGlow {
-          from { box-shadow: 0 0 50px rgba(38,123,255,0.13); }
-          to { box-shadow: 0 0 90px rgba(38,123,255,0.25); }
-        }
-
-        @keyframes bytesContactPulse {
-          from { opacity: 0.45; transform: translate(-50%, -50%) scale(0.9); }
-          to { opacity: 0.9; transform: translate(-50%, -50%) scale(1.12); }
-        }
-
-        @media (max-width: 1024px) {
-          .bytes-hero { min-height: auto; }
-          .bytes-service-card { min-height: 500px; }
-        }
-
-        @media (max-width: 640px) {
-          .bytes-hero { padding-top: 30px; padding-bottom: 75px; }
-          .bytes-art { max-width: 390px; }
-          .bytes-art-center p { font-size: 8px; text-align: center; }
-          .bytes-floating { padding: 9px 11px; font-size: 8px; }
-          .bytes-service-card { min-height: auto; padding: 27px; }
-          .bytes-service-card > div:nth-child(2) { margin-top: 38px; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .bytes-ambient-light,
-          .bytes-hero-glow,
-          .bytes-enter,
-          .bytes-art,
-          .bytes-ring,
-          .bytes-art-halo,
-          .bytes-art-center,
-          .bytes-floating,
-          .bytes-contact-glow {
-            animation: none !important;
-          }
-
-          .bytes-service-card,
-          .bytes-process-item,
-          .bytes-service-symbol,
-          .bytes-nav-link,
-          .bytes-primary-button,
-          .bytes-secondary-button,
-          .bytes-home-link {
-            transition: none !important;
-          }
-        }
-
-/* ================================
-   V-ONE BYTES — HERO SECTION
-================================ */
-
-.bytes-hero {
-  position: relative;
-  isolation: isolate;
-  background: #061321;
-  color: #f5f9ff;
-}
-
-.bytes-hero-glow {
-  position: absolute;
-  width: 650px;
-  height: 650px;
-  top: 5%;
-  right: -15%;
-  border-radius: 50%;
-  background: rgba(36, 150, 255, 0.09);
-  filter: blur(110px);
-  pointer-events: none;
-}
-
-.bytes-hero-content {
-  position: relative;
-  z-index: 2;
-}
-
-.bytes-eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: #48B9FF;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-}
-
-.bytes-eyebrow-line {
-  width: 35px;
-  height: 1px;
-  background: #48B9FF;
-}
-
-.bytes-hero-title {
-  max-width: 680px;
-  margin-top: 28px;
-  color: #f5f9ff;
-  font-family: Georgia, serif;
-  font-size: clamp(42px, 5.3vw, 76px);
-  font-weight: 400;
-  line-height: 1.08;
-  letter-spacing: -0.045em;
-}
-
-.bytes-hero-title span {
-  display: block;
-  color: #48B9FF;
-}
-
-.bytes-hero-description {
-  max-width: 520px;
-  margin-top: 25px;
-  color: #9bb0c4;
-  font-size: 15px;
-  line-height: 1.9;
-}
-
-.bytes-primary-button,
-.bytes-secondary-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  padding: 16px 22px;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.13em;
-  transition: all 0.3s ease;
-}
-
-.bytes-primary-button {
-  border: 1px solid #48B9FF;
-  background: #48B9FF;
-  color: #061321;
-}
-
-.bytes-primary-button:hover {
-  background: transparent;
-  color: #48B9FF;
-}
-
-.bytes-secondary-button {
-  border: 1px solid rgba(255,255,255,0.2);
-  color: #e5edf5;
-}
-
-.bytes-secondary-button:hover {
-  border-color: #48B9FF;
-  color: #48B9FF;
-}
-
-.bytes-hero-stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-  margin-top: 65px;
-  padding-top: 25px;
-  border-top: 1px solid rgba(255,255,255,0.12);
-}
-
-.bytes-hero-stats div {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.bytes-hero-stats strong {
-  color: #48B9FF;
-  font-size: 22px;
-  font-weight: 500;
-}
-
-.bytes-hero-stats span {
-  color: #8298ad;
-  font-size: 8px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-}
-
-/* DEVELOPMENT VISUAL */
-
-.bytes-art {
-  position: relative;
-  isolation: isolate;
-  animation: none;
-}
-
-.bytes-art-halo {
-  position: absolute;
-  inset: 15%;
-  border-radius: 50%;
-  background: rgba(36, 150, 255, 0.2);
-  filter: blur(75px);
-}
-
-.bytes-device {
-  position: absolute;
-  border: 1px solid rgba(72,185,255,0.55);
-  background: linear-gradient(145deg, #163653, #071525);
-  box-shadow:
-    0 25px 80px rgba(0,0,0,0.55),
-    0 0 35px rgba(72,185,255,0.14);
-}
-
-.laptop-device {
-  width: 76%;
-  top: 22%;
-  left: 7%;
-  padding: 10px;
-  border-radius: 12px;
-  transform: perspective(1000px) rotateY(-9deg) rotateX(3deg);
-  animation: bytesLaptopFloat 7s ease-in-out infinite;
-}
-
-.laptop-screen {
-  overflow: hidden;
-  aspect-ratio: 16 / 10;
-  border-radius: 5px;
-  background: #071321;
-}
-
-.browser-bar {
-  display: flex;
-  height: 27px;
-  align-items: center;
-  gap: 5px;
-  padding: 0 9px;
-  background: #13283d;
-}
-
-.browser-bar span {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #48B9FF;
-}
-
-.browser-bar div {
-  margin-left: 12px;
-  color: #9CBBD5;
-  font-size: 7px;
-}
-
-.website-preview {
-  position: relative;
-  height: calc(100% - 27px);
-  padding: 15px;
-  background: radial-gradient(circle at 80% 70%, #123b63, #071321 70%);
-}
-
-.preview-nav {
-  color: white;
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 2px;
-}
-
-.preview-nav span {
-  color: #48B9FF;
-}
-
-.preview-content {
-  margin-top: 12%;
-}
-
-.preview-content > span {
-  color: #48B9FF;
-  font-size: 6px;
-  letter-spacing: 2px;
-}
-
-.preview-content h3 {
-  margin-top: 8px;
-  color: white;
-  font-family: Georgia, serif;
-  font-size: clamp(19px, 3vw, 35px);
-  line-height: 1.05;
-}
-
-.preview-button {
-  display: inline-block;
-  margin-top: 12px;
-  padding: 7px 12px;
-  background: #48B9FF;
-  color: #061322;
-  font-size: 7px;
-  font-weight: 800;
-}
-
-.preview-side-panel {
-  position: absolute;
-  right: 8%;
-  bottom: 18%;
-  display: flex;
-  width: 23%;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.preview-side-panel span {
-  height: 5px;
-  border-radius: 5px;
-  background: rgba(72,185,255,0.3);
-}
-
-.laptop-base {
-  width: 112%;
-  height: 9px;
-  margin-left: -6%;
-  border-radius: 2px 2px 12px 12px;
-  background: linear-gradient(#9bb9cf, #263d52 60%, #071321);
-}
-
-/* MOBILE PHONE */
-
-.phone-device {
-  z-index: 3;
-  right: 5%;
-  bottom: 12%;
-  width: 29%;
-  padding: 7px;
-  border-radius: 22px;
-  transform: rotate(8deg);
-  animation: bytesPhoneFloat 6s ease-in-out infinite;
-}
-
-.phone-screen {
-  position: relative;
-  min-height: 230px;
-  overflow: hidden;
-  padding: 20px 10px 12px;
-  border-radius: 16px;
-  background: linear-gradient(160deg, #102d49, #061321);
-}
-
-.phone-camera {
-  position: absolute;
-  top: 7px;
-  left: 50%;
-  width: 25px;
-  height: 5px;
-  border-radius: 5px;
-  background: #020914;
-  transform: translateX(-50%);
-}
-
-.phone-app-header {
-  margin-top: 8px;
-  color: #48B9FF;
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 2px;
-}
-
-.phone-app-card {
-  margin-top: 18px;
-  padding: 12px 8px;
-  background: linear-gradient(140deg, #174e78, #0a2036);
-}
-
-.phone-app-card span {
-  color: #8CEAFF;
-  font-size: 6px;
-}
-
-.phone-app-card strong {
-  display: block;
-  margin-top: 9px;
-  color: white;
-  font-family: Georgia, serif;
-  font-size: 14px;
-  line-height: 1.2;
-}
-
-.phone-app-lines {
-  display: grid;
-  gap: 7px;
-  margin-top: 17px;
-}
-
-.phone-app-lines span {
-  height: 5px;
-  border-radius: 5px;
-  background: rgba(140,234,255,0.25);
-}
-
-.phone-app-icons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-  color: #48B9FF;
-  font-size: 15px;
-}
-
-/* FLOATING LABELS */
-
-.tech-float {
-  position: absolute;
-  z-index: 4;
-  border: 1px solid rgba(72,185,255,0.5);
-  padding: 12px 15px;
-  background: rgba(6,19,34,0.92);
-  color: #8CEAFF;
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 0.15em;
-  backdrop-filter: blur(12px);
-}
-
-.tech-code {
-  top: 10%;
-  right: 13%;
-}
-
-.tech-design {
-  bottom: 25%;
-  left: 1%;
-}
-
-.tech-app {
-  right: 1%;
-  bottom: 4%;
-  font-size: 7px;
-}
-
-/* ANIMATIONS */
-
-@keyframes bytesLaptopFloat {
-  0%, 100% {
-    transform: perspective(1000px) rotateY(-9deg) rotateX(3deg) translateY(0);
-  }
-  50% {
-    transform: perspective(1000px) rotateY(-9deg) rotateX(3deg) translateY(-10px);
-  }
-}
-
-@keyframes bytesPhoneFloat {
-  0%, 100% {
-    transform: rotate(8deg) translateY(0);
-  }
-  50% {
-    transform: rotate(8deg) translateY(-12px);
-  }
-}
-
-/* SCROLL INDICATOR */
-
-.bytes-scroll-indicator {
-  position: absolute;
-  bottom: 25px;
-  left: 50%;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: #8298ad;
-  font-size: 8px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  transform: translateX(-50%);
-}
-
-.bytes-scroll-indicator span {
-  width: 28px;
-  height: 1px;
-  background: #48B9FF;
-}
-
-/* RESPONSIVE */
-
-@media (max-width: 768px) {
-  .bytes-hero {
-    padding-bottom: 65px;
-  }
-
-  .bytes-hero-title {
-    font-size: clamp(40px, 10vw, 58px);
-  }
-
-  .bytes-hero-stats {
-    gap: 20px;
-    margin-top: 42px;
-  }
-
-  .bytes-art {
-    max-width: 470px;
-  }
-
-  .phone-screen {
-    min-height: 190px;
-  }
-
-  .phone-app-card strong {
-    font-size: 12px;
-  }
-
-  .tech-float {
-    padding: 8px 10px;
-    font-size: 7px;
-  }
-
-  .bytes-scroll-indicator {
-    display: none;
-  }
-}
-
-@media (max-width: 480px) {
-  .bytes-hero-stats {
-    gap: 14px;
-  }
-
-  .bytes-hero-stats span {
-    font-size: 7px;
-  }
-
-  .bytes-art {
-    max-width: 360px;
-  }
-
-  .phone-screen {
-    min-height: 155px;
-  }
-
-  .phone-app-card {
-    margin-top: 14px;
-    padding: 9px 6px;
-  }
-
-  .phone-app-card strong {
-    font-size: 10px;
-  }
-
-  .tech-app {
-    right: 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .laptop-device,
-  .phone-device {
-    animation: none !important;
-  }
-}
-
-      `}</style>
     </main>
   );
 }
